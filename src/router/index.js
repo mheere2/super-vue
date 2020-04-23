@@ -11,7 +11,6 @@ const reqAuth = { requiresAuth: true };
 const routes = [
   { path: '/', name: "home", component: Home },
   { path: '/login', name: "login", component: Login },
-  //{ path: '/register', name: "register", component: Register },
   { path: '/dashboard', name: "dashboard", component: Dashboard, meta: reqAuth },
   { path: '*', redirect: "dashboard" } //,
 ];

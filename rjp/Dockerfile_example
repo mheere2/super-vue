@@ -1,0 +1,38 @@
+FROM microsoft/dotnet-framework:4.7.2-runtime
+#FROM microsoft/windowsservercore:1709
+#FROM microsoft/dotnet:2.2-runtime-deps-stretch-slim
+#FROM microsoft/windowsservercore:1803
+#FROM microsoft/windows:1703
+#FROM microsoft/dotnet:nanoserver
+
+WORKDIR /app
+
+COPY CRRedist2008_x86.msi ./
+
+#SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
+#RUN Start-Process 'CRRedist2008_x86.msi' '/qn' -PassThru | Wait-Process;
+#SHELL ["cmd", "/C"]
+RUN ["powershell", "msiexec", "/i", "CRRedist2008_x86.msi", "/qn", "/lime", "./Error1.log"]
+
+#COPY oledlg.dll ./
+#COPY oledlg.dll %WINDIR%\syswow64\oledlg.dll
+COPY oledlg.dll C:/Windows/SysWOW64/oledlg.dll
+#RUN %WINDIR%/syswow64/regsvr32.exe /i %WINDIR%/syswow64/oledlg.dll
+
+#CMD C:/Windows/SysWOW64/regsvr32.exe /i C:/Windows/SysWOW64/oledlg.dll
+
+SHELL ["cmd", "/s"]
+RUN C:\windows\syswow64\regsvr32.exe /i C:\windows\syswow64\oledlg.dll
+
+
+#RUN %WINDIR%\syswow64\regsvr32.exe /s /n /i oledlg.dll				# returned a non-zero code: 3
+#RUN %WINDIR%\syswow64\regsvr32.exe /s /n /i oledlg.dll				
+
+COPY rjp_main/bin/Debug/*.* ./
+
+#ENV FUSIONURL http://uk06-fus-dweb
+ENV FUSIONURL http://172.17.184.132
+#ENV FUSIONURL http://localhost:64656
+
+ENTRYPOINT ["rjp_main.exe"]
+

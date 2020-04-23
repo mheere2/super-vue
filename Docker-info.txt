@@ -1,0 +1,9 @@
+
+first build the image:  
+->   docker build -t super-vue .
+or (specifying a different named Dockerfile)
+->   docker build -t super-vue -f Dockerfile_http_server .
+
+
+then run the image:  
+->   docker run -it -p 7000:80 --rm super-vue

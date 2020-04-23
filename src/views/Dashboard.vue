@@ -1,12 +1,15 @@
 <template>
   <v-card class="mx-auto mt-10" max-width="400">
-    <v-card-title>This is a Dashboard Card</v-card-title>
+    <v-card-title>
+      Hello
+      <span class="red--text ml-3">{{ currentUser }}</span>
+    </v-card-title>
     <v-img
       class="white--text align-end"
       height="200px"
       src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
     >
-      <v-card-title>Top 10 Australian beaches</v-card-title>
+      <v-card-title>Nice beach he?</v-card-title>
     </v-img>
 
     <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
@@ -26,7 +29,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    currentUser() {
+      return this.$store.getters.currentUser;
+    }
+  }
+};
 </script>
 
 <style>
